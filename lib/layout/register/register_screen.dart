@@ -1,7 +1,10 @@
 import 'package:chat_app/layout/home_Screen.dart';
 import 'package:chat_app/shared/constants.dart';
+import 'package:chat_app/shared/dialog_utils.dart';
+import 'package:chat_app/shared/remote/firebase/firestore_helper.dart';
 import 'package:chat_app/shared/reusable_componenets/custom_form_field.dart';
 import 'package:chat_app/style/app_colors.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -26,9 +29,9 @@ class _LoginScreenState extends State<RegisterScreen> {
     return Container(
       decoration: BoxDecoration(
           image: DecorationImage(
-        image: AssetImage("assets/images/SIGN IN – 1.jpg"),
-        fit: BoxFit.fill,
-      )),
+            image: AssetImage("assets/images/SIGN IN – 1.jpg"),
+            fit: BoxFit.fill,
+          )),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
@@ -41,22 +44,16 @@ class _LoginScreenState extends State<RegisterScreen> {
           centerTitle: true,
         ),
         body: Padding(
-          padding: const EdgeInsets.all(12),
+          padding: const EdgeInsets.all(14),
           child: Form(
             key: formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  "Welcome back !",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 30),
-                ),
+
                 SizedBox(
-                  height: 10,
+                  height: 5,
                 ),
                 CustomFormField(
                     controller: fullNameController,
@@ -103,7 +100,8 @@ class _LoginScreenState extends State<RegisterScreen> {
                         });
                       },
                       icon: Icon(
-                        isConfirmObscure ? Icons.visibility_off : Icons.visibility,
+                        isConfirmObscure ? Icons.visibility_off : Icons
+                            .visibility,
                         size: 20,
                         color: AppColors.primaryLightColor,
                       )),
@@ -111,7 +109,7 @@ class _LoginScreenState extends State<RegisterScreen> {
                 CustomFormField(
                   controller: confirmPasswordController,
                   validator: (value) {
-                    if(value != passwordController.text){
+                    if (value != passwordController.text) {
                       return "Don`t Match";
                     }
                   },
@@ -125,20 +123,19 @@ class _LoginScreenState extends State<RegisterScreen> {
                         });
                       },
                       icon: Icon(
-                        isConfirmObscure ? Icons.visibility_off : Icons.visibility,
+                        isConfirmObscure ? Icons.visibility_off : Icons
+                            .visibility,
                         size: 20,
                         color: AppColors.primaryLightColor,
                       )),
                 ),
 
-                SizedBox(height: 20),
+                SizedBox(height: 10),
                 ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primaryLightColor,),
+                      backgroundColor: AppColors.primaryLightColor,),
                     onPressed: () {
-                      if (formKey.currentState?.validate() ?? false) {
-                        Navigator.pushNamedAndRemoveUntil(context,HomeScreen.route , (route) => false);
-                      }
+                      CreateNewUser();
                     },
                     child: Text(
                       "Register ",
@@ -150,5 +147,39 @@ class _LoginScreenState extends State<RegisterScreen> {
         ),
       ),
     );
+  }
+
+
+  Future<void> CreateNewUser() async {
+    if (formKey.currentState?.validate() ?? false) {
+      DialogUtils.ShowLoadingDialog(context);
+      try {
+        UserCredential credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: emailController.text,
+          password: passwordController.text,
+        );
+        FirestoreHelper.AddUser(
+            credential.user!.uid,
+            emailController.text,
+            fullNameController.text);
+        Navigator.pushReplacementNamed(context, HomeScreen.route);
+
+        DialogUtils.hideLoadingDialog(context);
+        print(credential.user?.uid);
+      } on FirebaseAuthException catch (e) {
+        DialogUtils.hideLoadingDialog(context);
+        if (e.code == 'weak-password') {
+          print('The password provided is too weak.');
+          DialogUtils.showDialogMessage(context: context, message: 'The password provided is too weak.');
+        } else if (e.code == 'email-already-in-use') {
+          print('The account already exists for that email.');
+          DialogUtils.showDialogMessage(context: context, message: 'The account already exists for that email.');
+        }
+      } catch (e) {
+        DialogUtils.hideLoadingDialog(context);
+        print(e);
+        DialogUtils.showDialogMessage(context: context, message: e.toString());
+      }
+    }
   }
 }
