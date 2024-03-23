@@ -1,4 +1,4 @@
-import 'package:chat_app/layout/home_Screen.dart';
+import 'package:chat_app/layout/home_screen/home_Screen.dart';
 import 'package:chat_app/shared/constants.dart';
 import 'package:chat_app/shared/provider/auth%20provider.dart';
 import 'package:chat_app/shared/remote/firebase/firestore_helper.dart';
@@ -27,16 +27,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          image: DecorationImage(
-        image: AssetImage("assets/images/SIGN IN – 1.jpg"),
-        fit: BoxFit.fill,
-      )),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
+    return Scaffold(
+        backgroundColor: AppColors.HomeColor,
+
         appBar: AppBar(
-          backgroundColor: Colors.transparent,
+          backgroundColor: AppColors.primaryLightColor,
           title: Text("Login",
               style: TextStyle(
                   fontSize: 25,
@@ -59,9 +54,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       fontWeight: FontWeight.w600,
                       fontSize: 30),
                 ),
-                SizedBox(
-                  height: 10,
-                ),
+
+                SizedBox(height: 20,),
+
                 CustomFormField(
                     controller: emailController,
                     validator: (value) {
@@ -75,6 +70,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                     label: "Email",
                     keyboard: TextInputType.emailAddress),
+
+                SizedBox(height: 20,),
+
                 CustomFormField(
                   controller: passwordController,
                   validator: (value) {
@@ -101,13 +99,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         color: AppColors.primaryLightColor,
                       )),
                 ),
+
                 SizedBox(height: 20),
-                InkWell(
-                    onTap: () {
-                      // TODO
-                    },
-                    child: Text("Forgot password ?")),
-                SizedBox(height: 20),
+
                 ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.primaryLightColor),
@@ -118,17 +112,17 @@ class _LoginScreenState extends State<LoginScreen> {
                       "LOGIN ",
                       style: TextStyle(color: Colors.white, fontSize: 20),
                     )),
-                SizedBox(height: 20),
+                SizedBox(height: 25),
                 InkWell(
                     onTap: () {
                       Navigator.pushNamed(context, "register");
                     },
-                    child: Text("Create My Account")),
+                    child: Text("Create My Account",style: TextStyle(fontSize: 15),)),
               ],
             ),
           ),
         ),
-      ),
+
     );
   }
 
