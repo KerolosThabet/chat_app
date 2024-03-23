@@ -1,9 +1,9 @@
 
-import 'package:chat_app/shared/provider/auth%20provider.dart';
+import 'package:TODO_app/shared/provider/auth%20provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../home_Screen.dart';
+import '../home_screen/home_Screen.dart';
 import '../login/login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
