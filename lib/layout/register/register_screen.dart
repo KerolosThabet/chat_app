@@ -1,4 +1,4 @@
-import 'package:chat_app/layout/home_Screen.dart';
+import 'package:chat_app/layout/home_screen/home_Screen.dart';
 import 'package:chat_app/model/user.dart';
 import 'package:chat_app/shared/constants.dart';
 import 'package:chat_app/shared/dialog_utils.dart';
@@ -32,16 +32,11 @@ class _LoginScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/images/SIGN IN – 1.jpg"),
-            fit: BoxFit.fill,
-          )),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
+    var height = MediaQuery.of(context).size.height;
+    return  Scaffold(
+        backgroundColor: AppColors.HomeColor,
         appBar: AppBar(
-          backgroundColor: Colors.transparent,
+          backgroundColor: AppColors.primaryLightColor,
           title: Text("Create Account",
               style: TextStyle(
                   fontSize: 25,
@@ -53,105 +48,107 @@ class _LoginScreenState extends State<RegisterScreen> {
           padding: const EdgeInsets.all(14),
           child: Form(
             key: formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+            child: SingleChildScrollView(
+              child: Column(
 
-                SizedBox(
-                  height: 5,
-                ),
-                CustomFormField(
-                    controller: fullNameController,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+              
+                  SizedBox(
+                    height: height*.15,
+                  ),
+                  CustomFormField(
+                      controller: fullNameController,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return " This field can`t be empty";
+                        }
+              
+                        return null;
+                      },
+                      label: "Full Name",
+                      keyboard: TextInputType.emailAddress),
+                  CustomFormField(
+                      controller: emailController,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return " This field can`t be empty";
+                        }
+                        if (!RegExp(Constants.emailRegex).hasMatch(value)) {
+                          return "Enter valid email";
+                        }
+                        return null;
+                      },
+                      label: "Email",
+                      keyboard: TextInputType.emailAddress),
+                  CustomFormField(
+                    controller: passwordController,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return " This field can`t be empty";
                       }
-
+                      if (value.length < 8) {
+                        return "password should be at least 8 char";
+                      }
                       return null;
                     },
-                    label: "Full Name",
-                    keyboard: TextInputType.emailAddress),
-                CustomFormField(
-                    controller: emailController,
+                    label: "Password",
+                    keyboard: TextInputType.visiblePassword,
+                    obscureText: isConfirmObscure,
+                    suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            isConfirmObscure = !isConfirmObscure;
+                          });
+                        },
+                        icon: Icon(
+                          isConfirmObscure ? Icons.visibility_off : Icons.visibility,
+                          size: 20,
+                          color: AppColors.primaryLightColor,
+                        )),
+                  ),
+                  CustomFormField(
+                    controller: confirmPasswordController,
                     validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return " This field can`t be empty";
+                      if (value != passwordController.text) {
+                        return "Don`t Match";
                       }
-                      if (!RegExp(Constants.emailRegex).hasMatch(value)) {
-                        return "Enter valid email";
-                      }
-                      return null;
                     },
-                    label: "Email",
-                    keyboard: TextInputType.emailAddress),
-                CustomFormField(
-                  controller: passwordController,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return " This field can`t be empty";
-                    }
-                    if (value.length < 8) {
-                      return "password should be at least 8 char";
-                    }
-                    return null;
-                  },
-                  label: "Password",
-                  keyboard: TextInputType.visiblePassword,
-                  obscureText: isConfirmObscure,
-                  suffixIcon: IconButton(
+                    label: "Confirm Password",
+                    keyboard: TextInputType.visiblePassword,
+                    obscureText: isConfirmObscure,
+                    suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            isConfirmObscure = !isConfirmObscure;
+                          });
+                        },
+                        icon: Icon(
+                          isConfirmObscure ? Icons.visibility_off : Icons
+                              .visibility,
+                          size: 20,
+                          color: AppColors.primaryLightColor,
+                        )),
+                  ),
+              
+                  SizedBox(height: 10),
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.primaryLightColor,),
                       onPressed: () {
-                        setState(() {
-                          isConfirmObscure = !isConfirmObscure;
-                        });
+                        CreateNewUser();
                       },
-                      icon: Icon(
-                        isConfirmObscure ? Icons.visibility_off : Icons
-                            .visibility,
-                        size: 20,
-                        color: AppColors.primaryLightColor,
-                      )),
-                ),
-                CustomFormField(
-                  controller: confirmPasswordController,
-                  validator: (value) {
-                    if (value != passwordController.text) {
-                      return "Don`t Match";
-                    }
-                  },
-                  label: "Confirm Password",
-                  keyboard: TextInputType.visiblePassword,
-                  obscureText: isConfirmObscure,
-                  suffixIcon: IconButton(
-                      onPressed: () {
-                        setState(() {
-                          isConfirmObscure = !isConfirmObscure;
-                        });
-                      },
-                      icon: Icon(
-                        isConfirmObscure ? Icons.visibility_off : Icons
-                            .visibility,
-                        size: 20,
-                        color: AppColors.primaryLightColor,
-                      )),
-                ),
-
-                SizedBox(height: 10),
-                ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.primaryLightColor,),
-                    onPressed: () {
-                      CreateNewUser();
-                    },
-                    child: Text(
-                      "Register ",
-                      style: TextStyle(color: Colors.white, fontSize: 20),
-                    ))
-              ],
+                      child: Text(
+                        "Register ",
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ))
+                ],
+              ),
             ),
           ),
         ),
-      ),
+
     );
   }
 
