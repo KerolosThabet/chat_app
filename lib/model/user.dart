@@ -2,7 +2,7 @@ class User {
   String? id ;
   String? fullName ;
   String? email ;
-  User({required this.id ,required this.email , required this.fullName});
+  User({required this.id ,required this.email , required this.fullName,});
 
   User.fromFirestore(Map<String ,dynamic>data){
     id = data["id"];
@@ -14,7 +14,7 @@ class User {
     return {
       'id': id ,
       'fullName' :fullName ,
-      'email' :email
+      'email' :email,
     };
   }
 }

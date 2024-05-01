@@ -1,7 +1,7 @@
-import 'package:chat_app/shared/provider/auth%20provider.dart';
-import 'package:chat_app/shared/remote/firebase/firestore_helper.dart';
-import 'package:chat_app/shared/reusable_componenets/custom_form_field.dart';
-import 'package:chat_app/style/app_colors.dart';
+import 'package:TODO_app/shared/provider/auth%20provider.dart';
+import 'package:TODO_app/shared/remote/firebase/firestore_helper.dart';
+import 'package:TODO_app/shared/reusable_componenets/custom_form_field.dart';
+import 'package:TODO_app/style/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
@@ -39,7 +39,7 @@ class _EditTaskState extends State<EditTask> {
           Container(
             height: 150,
             width: double.infinity,
-            color: AppColors.primaryLightColor,
+            color: Theme.of(context).colorScheme.primary,
           ),
           SafeArea(
             child: ListView(
@@ -52,7 +52,7 @@ class _EditTaskState extends State<EditTask> {
                         },
                         icon: Icon(
                           Icons.arrow_back,
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.onSecondary,
                         )),
                     Text(
                       "Edit Task ",
@@ -62,7 +62,7 @@ class _EditTaskState extends State<EditTask> {
                 ),
                 Container(
                   decoration: BoxDecoration(
-                      color: Colors.white,
+                      color:Theme.of(context).colorScheme.onSecondary,
                       borderRadius: BorderRadius.all(Radius.circular(15))),
                   width: double.infinity,
                   margin: EdgeInsets.all(15),
@@ -77,7 +77,9 @@ class _EditTaskState extends State<EditTask> {
                       CustomFormField(
                           label: "Title",
                           controller: TitleController,
-                          keyboard: TextInputType.text),
+                          keyboard: TextInputType.text
+
+                      ),
                       SizedBox(
                         height: 15,),
                       CustomFormField(

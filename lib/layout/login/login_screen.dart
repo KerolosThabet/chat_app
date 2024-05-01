@@ -1,14 +1,14 @@
-import 'package:chat_app/layout/home_screen/home_Screen.dart';
-import 'package:chat_app/shared/constants.dart';
-import 'package:chat_app/shared/provider/auth%20provider.dart';
-import 'package:chat_app/shared/remote/firebase/firestore_helper.dart';
-import 'package:chat_app/shared/reusable_componenets/custom_form_field.dart';
-import 'package:chat_app/style/app_colors.dart';
+import 'package:TODO_app/layout/home_screen/home_Screen.dart';
+import 'package:TODO_app/shared/constants.dart';
+import 'package:TODO_app/shared/provider/auth%20provider.dart';
+import 'package:TODO_app/shared/remote/firebase/firestore_helper.dart';
+import 'package:TODO_app/shared/reusable_componenets/custom_form_field.dart';
+import 'package:TODO_app/style/app_colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../shared/dialog_utils.dart';
-import 'package:chat_app/model/user.dart' as MyUser ;
+import 'package:TODO_app/model/user.dart' as MyUser ;
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({super.key});
@@ -28,7 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: AppColors.HomeColor,
+        backgroundColor: AppColors.HomeLightColor,
 
         appBar: AppBar(
           backgroundColor: AppColors.primaryLightColor,
@@ -132,13 +132,14 @@ class _LoginScreenState extends State<LoginScreen> {
       DialogUtils.ShowLoadingDialog(context);
       try {
         UserCredential credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: emailController.text,
-          password: passwordController.text,);
+          email: emailController.text, password: passwordController.text,);
         DialogUtils.hideLoadingDialog(context);
         print(credential.user?.uid);
         MyUser.User? user = await FirestoreHelper.GetUser(credential.user!.uid);
+
         provider.setUsers(credential.user, user);
         Navigator.pushReplacementNamed(context, HomeScreen.route);
+
       } on FirebaseAuthException catch (e) {
         DialogUtils.hideLoadingDialog(context);
         if (e.code == 'user-not-found') {
@@ -153,4 +154,5 @@ class _LoginScreenState extends State<LoginScreen> {
       }
     }
   }
+
 }

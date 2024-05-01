@@ -1,4 +1,4 @@
-import 'package:chat_app/style/app_colors.dart';
+import 'package:TODO_app/style/app_colors.dart';
 import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +24,7 @@ class _AddTaskState extends State<AddTask> {
     HomeProvider provider = Provider.of<HomeProvider>(context);
     return
       Container(
-      color: Colors.white,
+      color:Theme.of(context).colorScheme.onSecondary,
       padding: EdgeInsets.all(15),
       child: Form(
         key:widget.formKey,

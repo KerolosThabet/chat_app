@@ -22,7 +22,7 @@ class CustomFormField extends StatelessWidget {
       obscuringCharacter: "*",
       controller:controller,
       style: TextStyle(
-          color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+          color: Theme.of(context).colorScheme.primary, fontSize: 20, fontWeight: FontWeight.bold),
       keyboardType: keyboard,
       decoration: InputDecoration(
         labelText: label,

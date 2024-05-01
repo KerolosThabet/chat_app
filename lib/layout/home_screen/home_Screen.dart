@@ -1,16 +1,17 @@
 
-import 'package:chat_app/layout/home_screen/provider/home_provider.dart';
-import 'package:chat_app/layout/home_screen/tabs/List_tab.dart';
-import 'package:chat_app/layout/home_screen/tabs/settings_tab.dart';
-import 'package:chat_app/layout/home_screen/widegets/add_task.dart';
-import 'package:chat_app/model/task.dart';
-import 'package:chat_app/shared/dialog_utils.dart';
-import 'package:chat_app/shared/provider/auth%20provider.dart';
-import 'package:chat_app/shared/remote/firebase/firestore_helper.dart';
-import 'package:chat_app/style/app_colors.dart';
+import 'package:TODO_app/layout/home_screen/provider/home_provider.dart';
+import 'package:TODO_app/layout/home_screen/tabs/List_tab.dart';
+import 'package:TODO_app/layout/home_screen/tabs/settings_tab.dart';
+import 'package:TODO_app/layout/home_screen/widegets/add_task.dart';
+import 'package:TODO_app/model/task.dart';
+import 'package:TODO_app/shared/dialog_utils.dart';
+import 'package:TODO_app/shared/provider/auth%20provider.dart';
+import 'package:TODO_app/shared/remote/firebase/firestore_helper.dart';
+import 'package:TODO_app/style/app_colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../shared/provider/setting_provider.dart';
 import '../login/login_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -24,6 +25,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<Widget> Tabs = [ListTab(), SettingsTab()];
+
   TextEditingController TitleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey();
@@ -32,6 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    SettingProvider SetiingProvider = Provider.of<SettingProvider>(context);
     authProvider provider = Provider.of<authProvider>(context);
     HomeProvider homeProvider = Provider.of<HomeProvider>(context);
     bool isKeyBoardOpened = MediaQuery.of(context).viewInsets.bottom != 0;
@@ -98,23 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
 
-        appBar: AppBar(
-          leading: IconButton(
-              onPressed: () async {
-                await provider.SignOut();
-                Navigator.pushReplacementNamed(context, LoginScreen.route);
-              },
-              icon: Icon(
-                Icons.exit_to_app,
-                color: Colors.white,
-                size: 20,
-              )),
-          centerTitle: true,
-          title: Text(
-            "Todo App",
-            style: TextStyle(color: Colors.white,),
-          ),
-        ),
+
 
         body: Scaffold(
           key: scaffoldKey,
