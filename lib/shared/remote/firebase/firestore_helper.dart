@@ -1,6 +1,6 @@
-import 'package:chat_app/model/task.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../../../model/task.dart';
 import '../../../model/user.dart';
 
 class FirestoreHelper {

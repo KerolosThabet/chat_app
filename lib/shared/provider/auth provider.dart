@@ -1,6 +1,6 @@
-import 'package:chat_app/shared/remote/firebase/firestore_helper.dart';
+import 'package:TODO_app/shared/remote/firebase/firestore_helper.dart';
 import 'package:flutter/material.dart';
-import 'package:chat_app/model/user.dart' as MyUser ;
+import 'package:TODO_app/model/user.dart' as MyUser ;
 import 'package:firebase_auth/firebase_auth.dart';
 
 
@@ -9,8 +9,8 @@ class authProvider extends ChangeNotifier {
  MyUser.User? databaseUser ;
 
  void setUsers (User? newFirebaseUserAuth ,MyUser.User? newDatabaseUser ){
-   newFirebaseUserAuth = firebaseUserAuth ;
-   newDatabaseUser = databaseUser ;
+   firebaseUserAuth = newFirebaseUserAuth ;
+     databaseUser = newDatabaseUser ;
  }
  bool isFirebaseUserLoggedin(){
    if(FirebaseAuth.instance.currentUser== null ) return false ;

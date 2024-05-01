@@ -1,6 +1,6 @@
-import 'package:chat_app/shared/provider/auth%20provider.dart';
-import 'package:chat_app/shared/remote/firebase/firestore_helper.dart';
-import 'package:chat_app/style/app_colors.dart';
+import 'package:TODO_app/shared/provider/auth%20provider.dart';
+import 'package:TODO_app/shared/remote/firebase/firestore_helper.dart';
+import 'package:TODO_app/style/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
@@ -43,7 +43,6 @@ class _taskWidgetState extends State<taskWidget> {
             )
       ]
       ),
-
       endActionPane:ActionPane(
           motion: ScrollMotion(),
           extentRatio: 0.27 ,
@@ -60,9 +59,10 @@ class _taskWidgetState extends State<taskWidget> {
             )
           ]
       ) ,
+
       child: Container(
         padding: EdgeInsets.all(15),
-        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20),),
+        decoration: BoxDecoration(color:Theme.of(context).colorScheme.onSecondary, borderRadius: BorderRadius.circular(20),),
       child: Row(
         children: [
           Container(
@@ -78,6 +78,9 @@ class _taskWidgetState extends State<taskWidget> {
            children: [
              Text(widget.task.title??'',
                style: Theme.of(context).textTheme.titleMedium?.copyWith( color:widget.task.isDone==true ? Colors.green: AppColors.primaryLightColor) ),
+             Text(widget.task.description??'',
+                 style: Theme.of(context).textTheme.titleSmall?.copyWith( color:widget.task.isDone==true ? Colors.green: AppColors.primaryLightColor) ),
+
              SizedBox(height: 10,),
              Row(
                children: [
