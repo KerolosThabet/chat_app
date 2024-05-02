@@ -81,15 +81,7 @@ class _taskWidgetState extends State<taskWidget> {
              Text(widget.task.description??'',
                  style: Theme.of(context).textTheme.titleSmall?.copyWith( color:widget.task.isDone==true ? Colors.green: AppColors.primaryLightColor) ),
 
-             SizedBox(height: 10,),
-             Row(
-               children: [
-                 Icon(Icons.access_time_outlined, color: Colors.black45,),
-                 Text( "${DateFormat.jm().format(taskDate)} ",
-                   style: Theme.of(context).textTheme.titleSmall, ),
 
-               ],
-             ),
 
            ],
          ),

@@ -65,6 +65,7 @@ class AppTheme {
     ),
     floatingActionButtonTheme: FloatingActionButtonThemeData(iconSize: 50),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      backgroundColor:AppColors.ThirdDarkColor ,
         selectedItemColor: AppColors.primaryDarkColor,
         unselectedItemColor: AppColors.SecondaryDarkColor,
         selectedIconTheme: IconThemeData(size: 40),
