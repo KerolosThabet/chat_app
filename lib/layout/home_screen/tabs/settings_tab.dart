@@ -14,8 +14,7 @@ class SettingsTab extends StatefulWidget {
 }
 
 class _SettingsTabState extends State<SettingsTab> {
-  var SelectedLanguage = "English";
-  var SelectedTheme = "Light";
+   var SelectedTheme ;
   @override
   Widget build(BuildContext context) {
     SettingProvider SetiingProvider = Provider.of<SettingProvider>(context);
@@ -36,43 +35,7 @@ class _SettingsTabState extends State<SettingsTab> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "Language",
-              style: Theme.of(context).textTheme.titleSmall,
-            ),
-            Container(
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.onSecondary,
-                border: Border.all(color:Theme.of(context).colorScheme.primary,width: 2.5),
-              ),
-              margin: EdgeInsets.all(10),
-              padding: EdgeInsets.all(10),
 
-              child: DropdownButtonHideUnderline(
-                child: DropdownButton<String>(
-                  isExpanded: true,
-                  iconEnabledColor:Theme.of(context).colorScheme.primary,
-                  isDense: true,
-
-
-                  hint: Text('$SelectedLanguage',style: TextStyle(color:Theme.of(context).colorScheme.primary),),
-                  alignment: Alignment.centerLeft,
-
-                  style: Theme.of(context).textTheme.labelSmall,
-                  items: <String>['English', 'Arabic',].map((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                  value: SelectedLanguage,
-                  onChanged: (String? value) {
-
-                  },
-
-                ),
-              ),
-            ),
             Text(
               "Mode",
               style: Theme.of(context).textTheme.titleSmall,
@@ -90,7 +53,7 @@ class _SettingsTabState extends State<SettingsTab> {
                   isExpanded: true,
                   iconEnabledColor: AppColors.primaryLightColor,
                   isDense: true,
-                  hint: Text('$SelectedTheme',style: TextStyle(color:Theme.of(context).colorScheme.primary),),
+                  hint: Text('Choose your mode',style: TextStyle(color:Theme.of(context).colorScheme.primary),),
                   alignment: Alignment.centerLeft,
                   style: Theme.of(context).textTheme.labelSmall,
 

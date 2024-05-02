@@ -72,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   elevation: 30,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
-                    side: BorderSide(color: Colors.white, width: 5),
+                    side: BorderSide(color: Theme.of(context).colorScheme.onSecondary, width: 5),
                   ),
 
                   backgroundColor: AppColors.primaryLightColor,

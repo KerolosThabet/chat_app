@@ -22,7 +22,7 @@ void main() async {
   );
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(
-      create: (_) => SettingProvider(),
+      create: (_) => SettingProvider()..GetTheme(),
     ),
     ChangeNotifierProvider(create: (_) => authProvider()),
   ], child: MyApp()));
